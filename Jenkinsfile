@@ -15,11 +15,14 @@ node ('swarm') {
     stage "Build Application"
     dir("${env.DEVPROJCOMPOSEDIR}") {
         sh "docker-compose build"
+        # sh "docker-compose push" <-- either to hub.docker.com or our own registry
+        # sh "docker-compose bundle -o <bundle -- name>"
     }
     
     stage "Halt Deployed Services"
     dir("${env.DEVPROJCOMPOSEDIR}") {
         sh "docker node ls"
+        // either rollin upgrade or remove/halt the stack
         // sh "docker-compose -f docker-compose.yml -f docker-compose.sd-label.yml down"
         // sh "docker-compose -p serv -f docker-compose.sd-launch.yml down"
     }
