@@ -8,16 +8,18 @@ node ('swarm') {
     }
     
     stage "Configure Deployment Environment"
+    sh "docker service ls"
     // sh "cp docker-compose.sd-launch.yml ${env.DEVPROJCOMPOSEDIR}"
     // sh "cp docker-compose.sd-label.yml ${env.DEVPROJCOMPOSEDIR}"
     
     stage "Build Application"
     dir("${env.DEVPROJCOMPOSEDIR}") {
-        sh "docker-compose -f docker-compose.yml build"
+        sh "docker-compose build"
     }
     
     stage "Halt Deployed Services"
     dir("${env.DEVPROJCOMPOSEDIR}") {
+        sh "docker node ls"
         // sh "docker-compose -f docker-compose.yml -f docker-compose.sd-label.yml down"
         // sh "docker-compose -p serv -f docker-compose.sd-launch.yml down"
     }
@@ -26,6 +28,7 @@ node ('swarm') {
     dir("${env.DEVPROJCOMPOSEDIR}") {
         // sh "docker-compose -p serv -f docker-compose.sd-launch.yml up -d"
         // sh "docker-compose -f docker-compose.yml -f docker-compose.sd-label.yml up -d"
+        sh "echo this is Just a demo because it a long week"
     }
     
     stage "Scale Birthday App"
