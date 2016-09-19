@@ -14,7 +14,7 @@ node ('swarm') {
     
     stage "Upload Docker Images to register"
     dir("${env.DEVPROJCOMPOSEDIR}") {
-        sh "docker login -u mikeagileclouds -p AgileClouds1"
+        sh "docker login -u ${env.DOCKERHUBUSER} -p ${env.DOCKERHUBPASSWD}"
         sh "docker-compose push"
     }
     
