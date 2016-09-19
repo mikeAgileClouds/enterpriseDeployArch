@@ -15,8 +15,8 @@ node ('swarm') {
     stage "Build Application"
     dir("${env.DEVPROJCOMPOSEDIR}") {
         sh "docker-compose build"
-        # sh "docker-compose push" <-- either to hub.docker.com or our own registry
-        # sh "docker-compose bundle -o <bundle -- name>"
+        // sh "docker-compose push" <-- either to hub.docker.com or our own registry
+        // sh "docker-compose bundle -o <bundle -- name>"
     }
     
     stage "Halt Deployed Services"
