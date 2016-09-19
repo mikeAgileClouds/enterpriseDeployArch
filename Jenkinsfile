@@ -14,7 +14,7 @@ node ('swarm') {
     
     stage "Upload Docker Images to register"
     dir("${env.DEVPROJCOMPOSEDIR}") {
-        sh "docker login -u ${env.DOCKERHUBUSER} -p ${env.DOCKERHUBPASSWD}"
+        sh "docker login -u ${env.DOCKER_HUB_USER} -p ${env.DOCKER_HUB_PASSWORD}"
         sh "docker-compose push"
     }
     
