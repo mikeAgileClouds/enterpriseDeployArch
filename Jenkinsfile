@@ -7,16 +7,20 @@ node ('swarm') {
         git url: "${env.DEVPROJROOTURL}"
     }
     
-    stage "Configure Deployment Environment"
-    sh "docker service ls"
-    // sh "cp docker-compose.sd-launch.yml ${env.DEVPROJCOMPOSEDIR}"
-    // sh "cp docker-compose.sd-label.yml ${env.DEVPROJCOMPOSEDIR}"
-    
-    stage "Build Application"
+    stage "Build Docker Images"
     dir("${env.DEVPROJCOMPOSEDIR}") {
         sh "docker-compose build"
-        // sh "docker-compose push" <-- either to hub.docker.com or our own registry
-        // sh "docker-compose bundle -o <bundle -- name>"
+    }
+    
+    stage "Upload Docker Images to register"
+    dir("${env.DEVPROJCOMPOSEDIR}") {
+        sh "docker login -u mikeagileclouds -p AgileClouds1"
+        sh "docker-compose push"
+    }
+    
+    stage "Create Application Bundle"
+    dir("${env.DEVPROJCOMPOSEDIR}") {
+        sh "docker-compose bundle -o demoapp.dab"
     }
     
     stage "Halt Deployed Services"
@@ -29,9 +33,7 @@ node ('swarm') {
 
     stage "Deploy Birthday App"
     dir("${env.DEVPROJCOMPOSEDIR}") {
-        // sh "docker-compose -p serv -f docker-compose.sd-launch.yml up -d"
-        // sh "docker-compose -f docker-compose.yml -f docker-compose.sd-label.yml up -d"
-        sh "echo this is Just a demo because it a long week"
+        sh "docker stack deploy demoapp"
     }
     
     stage "Scale Birthday App"
