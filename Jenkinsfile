@@ -36,6 +36,6 @@ node ('swarm') {
     
     stage "Publish Birthday App details"
     dir("${env.DEVPROJCOMPOSEDIR}") {
-        sh "docker sevice ls"
+        sh "docker service ls"
     }
 }
