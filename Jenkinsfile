@@ -22,29 +22,20 @@ node ('swarm') {
     dir("${env.DEVPROJCOMPOSEDIR}") {
         sh "docker-compose bundle -o demoapp.dab"
     }
-    
-    stage "Halt Deployed Services"
-    dir("${env.DEVPROJCOMPOSEDIR}") {
-        sh "docker node ls"
-        // either rollin upgrade or remove/halt the stack
-        // sh "docker-compose -f docker-compose.yml -f docker-compose.sd-label.yml down"
-        // sh "docker-compose -p serv -f docker-compose.sd-launch.yml down"
-    }
 
     stage "Deploy Birthday App"
     dir("${env.DEVPROJCOMPOSEDIR}") {
-        sh "docker stack deploy demoapp"
+        sh "docker stack deploy demoapp" // deploy create as well as update stack
     }
     
-    stage "Scale Birthday App"
+    stage "Configure Birthday App"
     dir("${env.DEVPROJCOMPOSEDIR}") {
-        // sh "docker-compose -f docker-compose.yml -f docker-compose.sd-label.yml scale voting-app=3"
-        // sh "docker-compose -f docker-compose.yml -f docker-compose.sd-label.yml scale result-app=2"
+        sh "docker service  update --publish-add 8081:80 demoapp_voting-app"
+        sh "docker service  update --publish-add 8082:80 demoapp_result-app"
     }
     
     stage "Publish Birthday App details"
     dir("${env.DEVPROJCOMPOSEDIR}") {
-        // sh "docker-compose -p serv -f docker-compose.sd-launch.yml ps"
-        // sh "docker-compose ps"
+        sh "docker sevice ls"
     }
 }
