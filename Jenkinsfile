@@ -9,7 +9,8 @@ node ('swarm') {
     
     stage "Build Docker Images"
     dir("${env.DEVPROJCOMPOSEDIR}") {
-        sh "docker-compose build --pull"
+        sh "docker-compose build" // build --pull is failing on some nodes
+        sh "docker-compose pull"
     }
     
     stage "Upload Docker Images to register"
