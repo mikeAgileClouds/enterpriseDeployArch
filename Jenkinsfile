@@ -21,18 +21,17 @@ node ('swarm') {
     
     stage "Create Application Bundle"
     dir("${env.DEVPROJCOMPOSEDIR}") {
-        sh "docker-compose bundle -o demoapp.dab"
+        sh "docker-compose bundle -o polyglot.dab"
     }
 
     stage "Deploy Birthday App"
     dir("${env.DEVPROJCOMPOSEDIR}") {
-        sh "docker stack deploy demoapp" // deploy create as well as update stack
+        sh "docker stack deploy polyglot" // deploy create as well as update stack
     }
     
     stage "Configure Birthday App"
     dir("${env.DEVPROJCOMPOSEDIR}") {
-        sh "docker service  update --publish-add 8081:80 demoapp_voting-app"
-        sh "docker service  update --publish-add 8082:80 demoapp_result-app"
+        sh "docker service  update --publish-add 7979:80 polyglot_apigateway"
     }
     
     stage "Publish Birthday App details"
