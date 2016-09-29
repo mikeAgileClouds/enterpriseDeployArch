@@ -11,13 +11,13 @@ node ('swarm') {
     stage "Build Docker Images"
     dir("${env.DEVPROJCOMPOSEDIR}") {
         sh "docker-compose build" // build --pull is failing on some nodes
-        sh "docker-compose pull"
     }
     
     stage "Upload Docker Images to register"
     dir("${env.DEVPROJCOMPOSEDIR}") {
         sh "docker login -u ${env.DOCKER_HUB_USER} -p ${env.DOCKER_HUB_PASSWORD}"
         sh "docker-compose push"
+        sh "docker-compose pull"
     }
     
     stage "Create Application Bundle"
