@@ -1,11 +1,13 @@
 node ('swarm') {
     stage "Checkout Deployment Architecture and Operations Source"
     checkout scm
+    // sh "git submodule update --init"
     
     stage "Checkout Developer Source Code"
     dir("${env.DEVPROJROOTDIR}") {
-        // git url: "${env.DEVPROJROOTURL}"
-        sh "git clone --recursive ${env.DEVPROJROOTURL}"
+        git url: "${env.DEVPROJROOTURL}"
+        sh "git submodule update --init"
+        // sh "git clone --recursive ${env.DEVPROJROOTURL}"
     }
     
     stage "Build Docker Images"
