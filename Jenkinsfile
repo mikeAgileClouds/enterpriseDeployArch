@@ -4,7 +4,8 @@ node ('swarm') {
     
     stage "Checkout Developer Source Code"
     dir("${env.DEVPROJROOTDIR}") {
-        git url: "${env.DEVPROJROOTURL}"
+        // git url: "${env.DEVPROJROOTURL}"
+        sh "git clone --recursive ${env.DEVPROJROOTURL}"
     }
     
     stage "Build Docker Images"
