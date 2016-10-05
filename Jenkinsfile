@@ -34,7 +34,7 @@ node ('swarm') {
     
     stage "Configure Birthday App"
     dir("${env.DEVPROJCOMPOSEDIR}") {
-        sh "docker service  update --publish-add 7979:80 polyglot_apigateway"
+        sh "docker service  update --publish-add 7979:5000 polyglot_apigateway"
     }
     
     stage "Publish Birthday App details"
