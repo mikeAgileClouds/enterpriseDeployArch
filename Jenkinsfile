@@ -7,7 +7,7 @@ node ('swarm') {
     dir("${env.DEVPROJROOTDIR}") {
         git url: "${env.DEVPROJROOTURL}"
         sh "git submodule update --init"
-        // sh "git clone --recursive ${env.DEVPROJROOTURL}"
+        sh "git submodule update --force"
     }
     
     stage "Build Docker Images"
